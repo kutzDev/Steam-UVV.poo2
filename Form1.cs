@@ -2,11 +2,6 @@ namespace Simple_Punch_Out_Game_MOO_ICT
 {
     public partial class Form1 : Form
     {
-        int i = 1;
-        Image currentEnemyPunch1;
-        Image currentEnemyPunch2;
-        Image currentEnemyBlock;
-        Image currentEnemyStand;
 
         bool playerBlock = false;
         bool enemyBlock = false;
@@ -15,7 +10,7 @@ namespace Simple_Punch_Out_Game_MOO_ICT
         int index = 0;
         int playerHealth = 100;
         int enemyHealth = 100;
-        List<string> enemyAttack = new List<string> { "left", "right", "block" };
+        List<string> enemyAttack = new List<string> { "left", "right", "block"};
 
 
 
@@ -23,28 +18,6 @@ namespace Simple_Punch_Out_Game_MOO_ICT
         {
             InitializeComponent();
             ResetGame();
-        }
-
-        private void ChangeEnemy()
-        {
-            int enemyChoice = random.Next(0, 2);
-
-            if (enemyChoice == 0)
-            {
-                currentEnemyPunch1 = Properties.Resources.enemy_punch1;
-                currentEnemyPunch2 = Properties.Resources.enemy_punch2;
-                currentEnemyBlock = Properties.Resources.enemy_block;
-                currentEnemyStand = Properties.Resources.enemy_stand;
-            }
-            else
-            {
-                currentEnemyPunch1 = Properties.Resources.don_punch1;
-                currentEnemyPunch2 = Properties.Resources.don_punch2;
-                currentEnemyBlock = Properties.Resources.don_block;
-                currentEnemyStand = Properties.Resources.don_stand;
-            }
-            boxer.Image = currentEnemyStand;
-            boxer.Refresh();
         }
 
         private void BoxerAttackTImerEvent(object sender, EventArgs e)
@@ -55,7 +28,7 @@ namespace Simple_Punch_Out_Game_MOO_ICT
             switch (enemyAttack[index].ToString())
             {
                 case "left":
-                    boxer.Image = currentEnemyPunch1;
+                    boxer.Image = Properties.Resources.enemy_punch1;
                     enemyBlock = false;
 
                     if (boxer.Bounds.IntersectsWith(player.Bounds) && playerBlock == false)
@@ -63,25 +36,25 @@ namespace Simple_Punch_Out_Game_MOO_ICT
                         playerHealth -= 5;
                     }
 
-                    break;
+                break;
 
                 case "right":
 
-                    boxer.Image = currentEnemyPunch2;
+                    boxer.Image = Properties.Resources.enemy_punch2;
                     enemyBlock = false;
 
                     if (boxer.Bounds.IntersectsWith(player.Bounds) && playerBlock == false)
                     {
                         playerHealth -= 5;
                     }
-                    break;
+                break;
 
                 case "block":
 
-                    boxer.Image = currentEnemyBlock;
+                    boxer.Image = Properties.Resources.enemy_block;
                     enemyBlock = true;
 
-                    break;
+                break;
             }
 
 
@@ -94,7 +67,7 @@ namespace Simple_Punch_Out_Game_MOO_ICT
             {
                 playerHealthBar.Value = playerHealth;
             }
-            if (enemyHealth > 0)
+            if (enemyHealth > 1)
             {
                 boxerHealthBar.Value = enemyHealth;
             }
@@ -170,19 +143,12 @@ namespace Simple_Punch_Out_Game_MOO_ICT
 
         private void ResetGame()
         {
-            i++;
-            playerHealth = 100;
-            enemyHealth = 200 * i;
-            boxerHealthBar.Maximum = enemyHealth; 
-            boxer.Left = 400;
-            ChangeEnemy();
             BoxerAttackTimer.Start();
             BoxerMoveTimer.Start();
-        }
+            playerHealth = 100;
+            enemyHealth = 100;
 
-        private void boxerHealthBar_Click(object sender, EventArgs e)
-        {
-
+            boxer.Left = 400;
         }
     }
 }
